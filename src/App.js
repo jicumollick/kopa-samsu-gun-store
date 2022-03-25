@@ -7,6 +7,13 @@ function App() {
 
   const [guns,setGuns] = useState([]);
 
+  const [cart,setCart] = useState([]);
+
+  const handleAddToCart = (gun) => {
+    const newCart = [...cart,gun];
+    setCart(newCart);
+};
+
   useEffect(
    () => {
     fetch('data.json')
@@ -20,13 +27,32 @@ function App() {
     <div >
     
     <Navbar></Navbar>
+
+    <div>
+
+    {
+      cart.map(item => {
+       return (
+         <h1 key={item.id}>{item.name}</h1>
+       ); 
+      })
+    }
+
+    </div>
+
+    <div className="card-container">
     {
       guns.map( (gun) => {
         return ( 
-        <Card key={gun.id} gunData={gun}></Card>
+        <Card key={gun.id} gunData={gun} 
+        handleAddToCart={handleAddToCart}
+        ></Card>
         )
       })
     }
+
+    </div>
+   
     </div>
   );
 }
